@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Card, Alert } from "react-bootstrap";
-import { Plus, User, FolderOpen, AlertTriangle } from "lucide-react";
+import { useState } from "react";
+import { Container, Row, Col, Button, Alert } from "react-bootstrap";
+import { Plus, FolderOpen, AlertTriangle } from "lucide-react";
 import "./App.css";
 import CreationModal from "./components/Presentation/CreationModal";
 import PresentationCard from "./components/Presentation/Card";
 import MOCK_PRESENTATIONS from "./components/Presentation/mock_presentations";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function idGenerator() {
   return Math.random().toString(36).substring(2, 9);
 }
+const client = new QueryClient();
 
 function App() {
   const [presentations, setPresentations] = useState(MOCK_PRESENTATIONS);
@@ -26,7 +28,7 @@ function App() {
   };
 
   return (
-    <div className="min-vh-100">
+    <QueryClientProvider client={client} className="min-vh-100">
       <Container fluid="xl" className="py-5">
         <Row className="align-items-center mb-5 gap-4">
           <Col>
@@ -71,7 +73,7 @@ function App() {
         handleClose={() => setShowModal(false)}
         handleCreate={handleCreateNew}
       />
-    </div>
+    </QueryClientProvider>
   );
 }
 

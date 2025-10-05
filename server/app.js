@@ -1,18 +1,16 @@
 import express from "express";
 import cors from "cors";
-
+import prRoutes from "./routes/prRoutes.js";
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const app = express();
 app.use(
   cors({
     origin: FRONTEND_URL,
-    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type"],
   })
 );
 app.use(express.json());
-// app.use("/api/presentation", presentationRoutes);
-
+app.use("/presentations", prRoutes);
 export default app;

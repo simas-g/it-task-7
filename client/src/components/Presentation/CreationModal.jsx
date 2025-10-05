@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Modal, Form, InputGroup, Button } from "react-bootstrap";
 import { Users, FileText, Plus } from "lucide-react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { postPresentation } from "../../lib/postPresentation";
 
 function CreationModal({ show, handleClose, handleCreate }) {
   const [nickname, setNickname] = useState("");
@@ -9,18 +11,20 @@ function CreationModal({ show, handleClose, handleCreate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (nickname && title) {
-      handleCreate({ nickname, title });
+      mutation.mutate(nickname, title);
       setNickname("");
       setTitle("");
       handleClose();
     }
   };
-
+  const mutation = useMutation({
+    mutationFn: (nickname, title) => postPresentation(nickname, title),
+  });
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3 mt-2">
             <Form.Label>Your Nickname</Form.Label>
             <InputGroup>
               <InputGroup.Text className="bg-light border-end-0">

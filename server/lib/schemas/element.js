@@ -1,6 +1,5 @@
-import mongoose, { model, models } from "mongoose";
-
-const { Schema } = mongoose;
+import mongoose from "mongoose";
+const { model, Schema, models } = mongoose;
 
 const ElementSchema = new Schema(
   {
@@ -27,4 +26,4 @@ const ElementSchema = new Schema(
 );
 
 const Element = models.Element || model("Element", ElementSchema);
-export default Element;
+export { Element, ElementSchema };

@@ -1,6 +1,6 @@
-import mongoose, { model, models } from "mongoose";
-
-const { Schema } = mongoose;
+import mongoose from "mongoose";
+const { model, Schema, models } = mongoose;
+import { ElementSchema } from "./element.js";
 
 const SlideSchema = new Schema(
   {
@@ -17,4 +17,4 @@ const SlideSchema = new Schema(
 );
 
 const Slide = models.SlideSchema || model("Slide", SlideSchema);
-export default Slide;
+export { SlideSchema, Slide };
