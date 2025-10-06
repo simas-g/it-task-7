@@ -12,3 +12,8 @@ export async function getPresentations() {
   const presentations = await Presentation.find();
   return presentations;
 }
+
+export async function fetchPresentationById(id) {
+  const presentation = await Presentation.findOne({ _id: id });
+  return presentation;
+}
