@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { model, Schema, models } = mongoose;
 import { SlideSchema } from "./slide.js";
+import { CollaboratorSchema } from "./collaborator.js";
 
 const PresentationSchema = new Schema(
   {
@@ -26,6 +27,7 @@ const PresentationSchema = new Schema(
         undoState: Schema.Types.Mixed,
       },
     ],
+    collaborators: [CollaboratorSchema],
   },
   { timestamps: true }
 );

@@ -4,12 +4,23 @@ export async function publishPresentation(creator, title) {
   const presentation = await Presentation.create({
     creator_nickname: creator,
     name: title,
+    slides: [
+      {
+        index: 0,
+      },
+    ],
+    collaborators: [
+      {
+        nickname: creator,
+        role: "owner",
+      },
+    ],
   });
   return presentation;
 }
 
 export async function getPresentations() {
-  const presentations = await Presentation.find();
+  const presentations = await Presentation.find().sort({ updatedAt: "desc" });
   return presentations;
 }
 

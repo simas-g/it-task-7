@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import styles from "./TableView.module.css";
 
-export default function TableView({ columns, data, onRowClick }) {
+export default function TableView({ columns, data, onAction }) {
   return (
     <div
       className={`${styles.tableContainer} shadow-sm rounded-4 overflow-hidden`}
@@ -26,12 +26,12 @@ export default function TableView({ columns, data, onRowClick }) {
                 {columns.map((col) => (
                   <td key={col.key}>
                     {col.type === "Link" ? (
-                      <Link
-                        to={`presentation/${row?.id}`}
+                      <button
+                        onClick={() => onAction(row._id)}
                         className={styles.link}
                       >
                         {row[col.displayKey] || row[col.key]} Edit
-                      </Link>
+                      </button>
                     ) : (
                       row[col.key]
                     )}
