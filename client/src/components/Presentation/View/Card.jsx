@@ -1,9 +1,14 @@
 import { User } from "lucide-react";
 import { Button, Card, Col } from "react-bootstrap";
-
+import { formatRelativeTime } from "../../../lib/formatTime";
+import { Link } from "react-router";
 function PresentationCard({ presentation }) {
-  const { title, creator, slides, lastUpdated } = presentation;
-
+  const {
+    name: title,
+    creator_nickname: creator,
+    slides,
+    updatedAt: lastUpdated,
+  } = presentation;
   return (
     <Col sm={12} md={6} lg={4} className="mb-4">
       <Card
@@ -16,7 +21,7 @@ function PresentationCard({ presentation }) {
               <User size={16} className="me-2 text-primary" />
               {creator}
             </div>
-            <p className="small text-muted">{slides} Slides</p>
+            <p className="small text-muted">{slides.length} Slides</p>
           </div>
           <Card.Title className="fs-5 fw-semibold text-dark mb-1 text-truncate">
             {title}
@@ -25,10 +30,16 @@ function PresentationCard({ presentation }) {
             Click to edit or collaborate.
           </Card.Text>
           <div className="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
-            <small className="text-secondary">{lastUpdated}</small>
-            <Button size="sm" variant="link">
+            <small className="text-secondary">
+              last edit: {formatRelativeTime(lastUpdated)}
+            </small>
+            <Link
+              to={`presentation/${presentation._id}`}
+              size="sm"
+              variant="link"
+            >
               Edit
-            </Button>
+            </Link>
           </div>
         </Card.Body>
       </Card>

@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { Modal, Form, InputGroup, Button } from "react-bootstrap";
 import { Users, FileText, Plus } from "lucide-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { postPresentation } from "../../lib/postPresentation";
-
-function CreationModal({ show, handleClose, handleCreate }) {
+function CreationModal({ show, handleClose }) {
   const [nickname, setNickname] = useState("");
   const [title, setTitle] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (nickname && title) {
-      mutation.mutate(nickname, title);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: ({ nickname, title }) => postPresentation(nickname, title),
+    onSuccess: () => {
       setNickname("");
       setTitle("");
       handleClose();
-    }
-  };
-  const mutation = useMutation({
-    mutationFn: (nickname, title) => postPresentation(nickname, title),
+      queryClient.invalidateQueries(["presentations"]);
+    },
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!nickname || !title) return;
+    mutation.mutate({ nickname, title });
+  };
+
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Body>
@@ -59,6 +62,7 @@ function CreationModal({ show, handleClose, handleCreate }) {
           </Form.Group>
         </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <Button variant="outline-secondary" onClick={handleClose}>
           Cancel
@@ -66,9 +70,10 @@ function CreationModal({ show, handleClose, handleCreate }) {
         <Button
           variant="primary d-flex align-items-center"
           onClick={handleSubmit}
-          disabled={!nickname || !title}
+          disabled={!nickname || !title || mutation.isLoading}
         >
-          <Plus size={16} className="me-2" /> Create
+          <Plus size={16} className="me-2" />
+          {mutation.isLoading ? "Creating..." : "Create"}
         </Button>
       </Modal.Footer>
     </Modal>

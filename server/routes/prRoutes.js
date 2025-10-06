@@ -1,8 +1,11 @@
 import express from "express";
-import { createPresentation } from "../controllers/prControllers.js";
+import {
+  createPresentation,
+  getAllPresentations,
+} from "../controllers/prControllers.js";
 const router = express.Router();
 
-// router.get("/", getPresentations);
+router.get("/", getAllPresentations);
 router.post("/create", createPresentation);
 // router.post("/join", joinPresentation);
 

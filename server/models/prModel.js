@@ -7,3 +7,8 @@ export async function publishPresentation(creator, title) {
   });
   return presentation;
 }
+
+export async function getPresentations() {
+  const presentations = await Presentation.find();
+  return presentations;
+}
