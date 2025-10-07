@@ -28,3 +28,28 @@ export async function fetchPresentationById(id) {
   const presentation = await Presentation.findOne({ _id: id });
   return presentation;
 }
+
+export async function assignToPresentation(id, name) {
+  const newCollaborator = {
+    nickname: name,
+    role: "viewer",
+  };
+  const presentation = await Presentation.findOneAndUpdate(
+    { _id: id, "collaborators.nickname": { $nin: [name] } },
+    { $push: { collaborators: newCollaborator } },
+    {
+      new: true,
+    }
+  );
+  return presentation;
+}
+export async function changeRole(projectId, username, newRole) {
+  const presentation = await Presentation.findOneAndUpdate(
+    { _id: id, "collaborators.nickname": { $nin: [name] } },
+    { $push: { collaborators: newCollaborator } },
+    {
+      new: true,
+    }
+  );
+  return presentation;
+}

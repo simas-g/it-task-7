@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Form, InputGroup, Button } from "react-bootstrap";
 import { Users, FileText, Plus } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { postPresentation } from "../../lib/postPresentation";
+import { postPresentation } from "../../lib/presentation";
 
 function CreationModal({ show, handleClose }) {
   const [nickname, setNickname] = useState("");
@@ -26,6 +26,9 @@ function CreationModal({ show, handleClose }) {
 
   return (
     <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header>
+        <Modal.Title>Create Your Presentation</Modal.Title>
+      </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 mt-2">

@@ -1,8 +1,7 @@
 import { User } from "lucide-react";
 import { Button, Card, Col } from "react-bootstrap";
 import { formatRelativeTime } from "../../../lib/formatTime";
-import { Link } from "react-router";
-function PresentationCard({ presentation }) {
+function PresentationCard({ presentation, onAction }) {
   const {
     name: title,
     creator_nickname: creator,
@@ -33,13 +32,13 @@ function PresentationCard({ presentation }) {
             <small className="text-secondary">
               last edit: {formatRelativeTime(lastUpdated)}
             </small>
-            <Link
-              to={`presentation/${presentation._id}`}
+            <Button
               size="sm"
               variant="link"
+              onClick={() => onAction(presentation._id)}
             >
-              Edit
-            </Link>
+              Join
+            </Button>
           </div>
         </Card.Body>
       </Card>

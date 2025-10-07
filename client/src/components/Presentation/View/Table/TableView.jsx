@@ -1,6 +1,5 @@
-import { Link } from "react-router";
 import styles from "./TableView.module.css";
-
+import { Button } from "react-bootstrap";
 export default function TableView({ columns, data, onAction }) {
   return (
     <div
@@ -22,16 +21,17 @@ export default function TableView({ columns, data, onAction }) {
         <tbody>
           {data.length > 0 ? (
             data.map((row) => (
-              <tr key={row._id}>
+              <tr key={row.id}>
                 {columns.map((col) => (
                   <td key={col.key}>
                     {col.type === "Link" ? (
-                      <button
-                        onClick={() => onAction(row._id)}
-                        className={styles.link}
+                      <Button
+                        size="sm"
+                        variant="link"
+                        onClick={() => onAction(row.id)}
                       >
-                        {row[col.displayKey] || row[col.key]} Edit
-                      </button>
+                        {row[col.displayKey] || row[col.key]} Join
+                      </Button>
                     ) : (
                       row[col.key]
                     )}

@@ -11,7 +11,7 @@ const routes = [
     path: "/",
     element: <App />,
   },
-  { path: "/presentation/:id", element: <PresentationPage /> },
+  { path: "/presentation/:id/:username", element: <PresentationPage /> },
 ];
 
 const client = new QueryClient();

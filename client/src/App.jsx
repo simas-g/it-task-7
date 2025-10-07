@@ -12,7 +12,7 @@ import "./App.css";
 import CreationModal from "./components/Presentation/CreationForm";
 import PresentationCard from "./components/Presentation/View/Card";
 import { useQuery } from "@tanstack/react-query";
-import { getPresentations } from "./lib/getPresentations";
+import { getPresentations } from "./lib/presentation";
 import { formatRelativeTime } from "./lib/formatTime";
 import TableView from "./components/Presentation/View/Table/TableView";
 import ConfirmationModal from "./components/Presentation/ConfirmationModal";
@@ -34,12 +34,13 @@ function App() {
     queryKey: ["presentations"],
     queryFn: getPresentations,
   });
-  const [confirmation, setConfirmation] = useState(false);
-  const [projectId, setProjectId] = useState(null);
-  const checkNickname = (id) => {
+  const handleNavigate = (id) => {
     setConfirmation(true);
     setProjectId(id);
   };
+  const [confirmation, setConfirmation] = useState(false);
+  const [projectId, setProjectId] = useState(null);
+
   const pres = fetchedPresentations.filter((f) => f.name.includes(filter));
   const header = (
     <Row className="align-items-center mb-5 gap-4">
@@ -122,12 +123,16 @@ function App() {
           viewMode === "gallery" ? (
             <Row>
               {pres.map((p) => (
-                <PresentationCard key={p.id} presentation={p} />
+                <PresentationCard
+                  key={p.id}
+                  presentation={p}
+                  onAction={handleNavigate}
+                />
               ))}
             </Row>
           ) : (
             <TableView
-              onAction={checkNickname}
+              onAction={handleNavigate}
               columns={[
                 { key: "title", label: "Title" },
                 { key: "creator", label: "Creator" },
@@ -161,6 +166,7 @@ function App() {
         <ConfirmationModal
           show={confirmation}
           handleClose={() => setConfirmation(false)}
+          presentationId={projectId}
         />
       </Container>
     </div>
