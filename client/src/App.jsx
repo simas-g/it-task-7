@@ -111,7 +111,6 @@ function App() {
         </Row>
         {isLoading ? (
           <div className="text-center">
-            <Loader2 size={24} className="me-2 text-primary spin" />
             <p>Loading presentations...</p>
           </div>
         ) : isError ? (
